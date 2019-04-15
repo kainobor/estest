@@ -1,0 +1,6 @@
+[Server]
+Port = "8080"
+
+[Elastic]
+IP = "10.5.0.5"
+Port = "9200"

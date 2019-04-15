@@ -1,0 +1,52 @@
+version: '3.3'
+
+networks:
+  esnet:
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+
+services:
+  es:
+    image: elasticsearch:7.0.0
+    container_name: es
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      esnet:
+        ipv4_address: 10.5.0.5
+    volumes:
+      - ./migrations:/migrations
+    stdin_open: true
+    tty: true
+#    command: [sh, -c, "cd /migrations && curl -H 'Content-Type: application/json' -XPUT '127.0.0.1:9200/user' --data-binary @create_user"]
+
+  go:
+    image: golang:1.12-alpine
+    container_name: golang
+    volumes:
+      - .:/go/src
+    environment:
+      - GO111MODULE=on
+    working_dir: /go/src
+    ports:
+      - 8080:8080
+    networks:
+      esnet:
+        ipv4_address: 10.5.0.6
+    command: [sh, -c, "apk add git && go build -o eltest && ./eltest -conf=\"./config/conf.toml\""]
+    stdin_open: true
+    tty: true
+
+
+
+volumes:
+  esdata01:
+    driver: local
+#  esdata02:
+#    driver: local
+#  godata:
+#    driver: local

@@ -1,0 +1,14 @@
+{
+   "mappings":{
+      "properties":{
+         "login":{
+            "type":"text",
+            "analyzer":"keyword"
+         },
+         "pass":{
+            "type":"text",
+            "analyzer":"keyword"
+         }
+      }
+   }
+}

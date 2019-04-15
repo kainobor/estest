@@ -1,0 +1,4 @@
+{"index": {"_id": "1"}}
+{"login": "admin", "pass": "admin"}
+{"index": {"_id": "2"}}
+{"login": "root", "pass": "rootpass"}
